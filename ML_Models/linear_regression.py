@@ -17,9 +17,9 @@ class LinearRegressor:
         # SVD
         U, S, Vt = np.linalg.svd(X)
 
-        V = np.transpose(Vt)
-        S_inv = np.linalg.inv(S)
-        Xt = np.transpose(X)
+        V = Vt.T
+        S_inv = np.diag(1/S)
+        Xt = X.T
         
         b1 = V @ S_inv @ U @ y
         b0 = y - Xt @ b1

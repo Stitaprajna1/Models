@@ -1,0 +1,32 @@
+import numpy as np
+import pandas as pd
+
+# y = B.X
+# B = VS-1U^T
+# X = UZV^T
+
+class LinearRegressor:
+    def __init__(self) -> None:
+        self.coef_ = None
+
+    def fit(self, **kwargs):
+        X = kwargs.get('X', [])
+        y = kwargs.get('y', [])
+        # intercept = kwargs.get('intercept', False)
+
+        # SVD
+        U, S, Vt = np.linalg.svd(X)
+
+        V = np.transpose(Vt)
+        S_inv = np.linalg.inv(S)
+        Xt = np.transpose(X)
+        
+        b1 = V @ S_inv @ U @ y
+        b0 = y - Xt @ b1
+
+        self.coef_ = [b1, b0]
+
+    def predict(self, x):
+        b0, b1 = self.coef_
+        y = b0 + b1 @ x
+        return y

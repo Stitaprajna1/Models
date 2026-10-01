@@ -10,6 +10,9 @@ class LinearRegressor:
         self.coef_ = None
 
     def fit(self, **kwargs):
+        """
+        Train Linear Regression Model
+        """
         X = kwargs.get('X', [])
         y = kwargs.get('y', [])
         # intercept = kwargs.get('intercept', False)
@@ -20,13 +23,19 @@ class LinearRegressor:
         V = Vt.T
         S_inv = np.diag(1/S)
         Xt = X.T
+        y_mean = np.mean(y)
+        xt_mean = np.mean(Xt)
         
+        # find slope and intercept
         b1 = V @ S_inv @ U @ y
-        b0 = y - Xt @ b1
+        b0 = y_mean - xt_mean @ b1
 
-        self.coef_ = [b1, b0]
+        self.coef_ = [b0, b1]
 
     def predict(self, x):
+        """
+        predict values
+        """
         b0, b1 = self.coef_
         y = b0 + b1 @ x
         return y

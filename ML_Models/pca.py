@@ -31,8 +31,8 @@ class PCA:
         x_transformed = self.transform()
         return x_transformed
     
-# if __name__ == '__main__':
-#     x = np.array([[3, 4], [2, 8], [6, 9]])
-#     pca = PCA(n_components=2)
-#     print(pca.fit_transform(x))
-#     print(pca.explained_variance_ratio_)
+if __name__ == '__main__':
+    x = np.array([[3, 4], [2, 8], [6, 9]])
+    pca = PCA(n_components=2)
+    print(pca.fit_transform(x))
+    print(pca.explained_variance_ratio_)

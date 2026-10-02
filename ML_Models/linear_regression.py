@@ -10,7 +10,7 @@ class LinearRegressor:
         self.coef_ = None
         self.intercept_ = None
 
-    def fit(self, *args):
+    def fit(self, *args, **kwargs):
         """
         Train Linear Regression Model
         """

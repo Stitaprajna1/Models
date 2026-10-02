@@ -5,8 +5,8 @@ import pandas as pd
 # z = b0 + Xb1
 # p = 1/(1 + e^(-z))
 # L = (y - y_p)^2
-# b1t = b1(t-1) - a.dL/db1|x=xt
-# b0t = b0(t-1) - a.dL/db0|x=xt
+# b1(t) = b1(t-1) - a.dL/db1|x=xt
+# b0(t) = b0(t-1) - a.dL/db0|x=xt
 
 class LogisticRegression:
 

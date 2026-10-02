@@ -14,15 +14,13 @@ class PCA:
         self.x_scaled = x_scaled
         self.U = U
         self.S = S
-        self.components_ = Vt.T
+        self.components_ = Vt.T[:self.n_components]
         self.eigenvalues = S**2/(n_rows-1)
-        self.explained_variance_ratio_ = np.sort(self.eigenvalues)[::-1]/np.sum(self.eigenvalues)
+        self.explained_variance_ratio_ = self.eigenvalues/np.sum(self.eigenvalues)
         
     def transform(self):
         x_transformed = self.x_scaled @ self.components_
-        order = np.argsort(-self.eigenvalues)
-        x_transformed = x_transformed[:, order]
-        return x_transformed[:, :self.n_components]
+        return x_transformed
     
     def fit_transform(self, x):
         self.fit(x)

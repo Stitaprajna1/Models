@@ -3,7 +3,7 @@ import pandas as pd
 
 # y = B.X
 # B = VS-1U^T
-# X = UZV^T
+# X = USV^T
 
 class LinearRegressor:
     def __init__(self) -> None:

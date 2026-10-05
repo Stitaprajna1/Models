@@ -36,9 +36,9 @@ class NaiveBayes:
                 self.columns_probability_distribution[column] = {
                     'type':'number',
                     'column_name': column ,
-                    'distribution': [{'mean': np.mean(X.loc[y.columns[0]==c,][column]),
-                                     'std': std, 
-                                     'class': c} for c in self.class_labels]
+                    'distribution': {{'mean': np.mean(X.loc[y[y==c],:][column]),
+                                     'std': std
+                                     } for c in self.class_labels}
                 }
                 
 
@@ -48,19 +48,19 @@ class NaiveBayes:
 
         for c in self.class_labels:
             joint_class_probability = 1
-            class_id = self.class_labels.index(c)
-            for pc in  self.columns_probability_distribution:
+            class_id = np.where(self.class_labels == c)[0][0]
+            for _, pc in  self.columns_probability_distribution.items():
                 # unpack values
                 col_name = pc['column_name']
-                val = x[col_name]
+                val = x[col_name].values[0]
                 df = pc['distribution']
                 # calculate joint probability distribution
                 if pc['type'] == 'object':
                     p = df[df[col_name]==val][c].values[0]
                     joint_class_probability = joint_class_probability*p
                 else:
-                    mu = df['mean']
-                    sigma = df['sigma']
+                    mu = df[c]['mean']
+                    sigma = df[c]['sigma']
                     p = self.gaussain_probability(mu=mu, sigma=sigma, x=val)
                     joint_class_probability = joint_class_probability*p
 
@@ -69,5 +69,14 @@ class NaiveBayes:
         res_id = np.argmax(probabilities)
         return self.class_labels[res_id]
 
-if __name__ == '__main__':
-    pass
+# if __name__ == '__main__':
+#     df = pd.read_csv('Models/play_tennis.csv')
+
+#     # train
+#     nv = NaiveBayes()
+#     X = df.iloc[:, :-1]
+#     y = df['play']
+#     nv.fit(X,y)
+
+#     # test
+#     print(nv.predict(df[df.index==8].iloc[:, :-1]))
